@@ -92,11 +92,9 @@ button.onclick = function () {
         changeBoard(board)
     }
     xhrRequest.open('get', 'https://sugoku.herokuapp.com/board?difficulty=random')
-    //we can change the difficulty of the puzzle the allowed values of difficulty are easy, medium, hard and random
     xhrRequest.send()
 }
 
-//validity of a value checking function
 function isPossible(board, sr, sc, val) {
     for (var row = 0; row < 9; row++) {
         if (board[row][sc] == val) {
@@ -124,7 +122,6 @@ function isPossible(board, sr, sc, val) {
 
 }
 
-//recursive helper function that tries values [1,9] for each empty block
 function solveSudokuHelper(board, sr, sc) {
     if (sr == 9) {
         changeBoard(board);
@@ -139,19 +136,15 @@ function solveSudokuHelper(board, sr, sc) {
         solveSudokuHelper(board, sr, sc + 1);
         return;
     }
-    //putting values [1,9]
     for (var i = 1; i <= 9; i++) {
-        //checking that value putten is valid
         if (isPossible(board, sr, sc, i)) {
-            //if it's valid we will put that value and recurse to the next block
             board[sr][sc] = i;
             solveSudokuHelper(board, sr, sc + 1);
-            board[sr][sc] = 0;                      //backtracking step 
+            board[sr][sc] = 0;                     
         }
     }
 }
 
-//main function taking partially filled board as a parameter
 function solveSudoku(board) {
     solveSudokuHelper(board, 0, 0)
 }
